@@ -24,7 +24,8 @@ public class AgregarPersonal extends javax.swing.JInternalFrame {
      private ControladorPersonal cpersonal;
      DefaultTableModel modelo = new DefaultTableModel();
      private boolean edit = false;
-     public static boolean PULSARON_BTN_MODIFICAR = false; 
+     public static boolean PULSARON_BTN_MODIFICAR = false;
+     Personal tmp = new Personal();
 
     /**
      * Creates new form AgregarPersonal
@@ -46,11 +47,13 @@ public class AgregarPersonal extends javax.swing.JInternalFrame {
         }
     }
     public void configTable(){
+        modelo.addColumn("Id");
         modelo.addColumn("Codigo");
         modelo.addColumn("Nombre");
         modelo.addColumn("Apellido");
         modelo.addColumn("Fecha_I");
         modelo.addColumn("Tipo");
+        modelo.addColumn("Galpon");
         this.tabla.setModel(modelo);
     }
     public void tablaPersonal(){ 
@@ -61,7 +64,7 @@ public class AgregarPersonal extends javax.swing.JInternalFrame {
                 //Object  ob = it.next();
         Personal p = (Personal) it.next();
         this.modelo.addRow(p.toArray());
-            System.out.println(p.getNombre());
+            //System.out.println(p.getNombre());
         }
         this.tabla.setModel(this.modelo);
     }
@@ -74,13 +77,15 @@ public class AgregarPersonal extends javax.swing.JInternalFrame {
     public String edit(String id){
         return id;
     }
-    public Personal getEntityByRow(String rowid,String nombre,String apellido,String fecha, String tipo){
+    public Personal getEntityByRow(String id,String codigo,String nombre,String apellido,String fecha, String tipo,String galpon){
         Personal tmppersonal = new Personal();
-        tmppersonal.setCod_p(rowid);
+        tmppersonal.setId(id);
+        tmppersonal.setCod_p(codigo);
         tmppersonal.setNombre(nombre);
         tmppersonal.setApellido(apellido);
         tmppersonal.setFecha_i(fecha);
         tmppersonal.setTipo(tipo);
+        tmppersonal.setGalpon(galpon);
         return tmppersonal;
     }
     public Personal getEntityByRowId(String rowid){
@@ -93,6 +98,7 @@ public class AgregarPersonal extends javax.swing.JInternalFrame {
         txtnombre.setText("");
         txtapellido.setText("");
         txtfecha.setText("");
+        txtgalpon.setText("");
     }
 
     /**
@@ -117,6 +123,8 @@ public class AgregarPersonal extends javax.swing.JInternalFrame {
         radiovolante = new javax.swing.JRadioButton();
         txtfecha = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtgalpon = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         btnguardar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -173,30 +181,42 @@ public class AgregarPersonal extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Fecha Ingreso:");
 
+        jLabel5.setText("Galpon:");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(21, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(13, 13, 13)
-                        .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(9, 9, 9)
-                        .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(4, 4, 4)
-                        .addComponent(txtapellido, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(3, 3, 3)
-                        .addComponent(txtfecha)))
+                        .addComponent(txtfecha))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtgalpon, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(13, 13, 13)
+                                .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(9, 9, 9)
+                                .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(4, 4, 4)
+                                .addComponent(txtapellido, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -218,7 +238,11 @@ public class AgregarPersonal extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtfecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(txtgalpon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -299,11 +323,11 @@ public class AgregarPersonal extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -328,11 +352,12 @@ public class AgregarPersonal extends javax.swing.JInternalFrame {
                 if (opcion == JOptionPane.YES_OPTION)
                 {
                     try {
-                    Personal tmpersonal = new Personal();
+                    Personal tmpersonal = this.tmp;
                     tmpersonal.setCod_p(txtcodigo.getText());
                     tmpersonal.setNombre(txtnombre.getText());
                     tmpersonal.setApellido(txtapellido.getText());
                     tmpersonal.setFecha_i(txtfecha.getText());
+                    tmpersonal.setGalpon(txtgalpon.getText());
                     tmpersonal.setTipo(this.radioSelect());
 
                     int resultado = this.cpersonal.modificarPersonal(tmpersonal);
@@ -358,6 +383,7 @@ public class AgregarPersonal extends javax.swing.JInternalFrame {
             tempersonal.setApellido(txtapellido.getText());
             tempersonal.setFecha_i(txtfecha.getText());
             tempersonal.setTipo(this.radioSelect());
+            tempersonal.setGalpon(txtgalpon.getText());
             
             int resultado = cpersonal.guardarPersonal(tempersonal);
             
@@ -372,7 +398,7 @@ public class AgregarPersonal extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Fallo la insercion de datos, comunicarse con el administrador.");
         }
-            
+            JOptionPane.showMessageDialog(null, "paso algo");
         }
     }//GEN-LAST:event_btnguardarActionPerformed
 
@@ -381,21 +407,24 @@ public class AgregarPersonal extends javax.swing.JInternalFrame {
         
         int row = tabla.getSelectedRow();
         String id =tabla.getValueAt(row, 0).toString();
-        String nombre = tabla.getValueAt(row, 1).toString();
-        String apellido = tabla.getValueAt(row, 2).toString();
-        String fecha = tabla.getValueAt(row, 3).toString();
-        String tipo = tabla.getValueAt(row, 4).toString();
+        String codigo = tabla.getValueAt(row, 1).toString();
+        String nombre = tabla.getValueAt(row, 2).toString();
+        String apellido = tabla.getValueAt(row, 3).toString();
+        String fecha = tabla.getValueAt(row, 4).toString();
+        String tipo = tabla.getValueAt(row, 5).toString();
+        String galpon = tabla.getValueAt(row, 6).toString();
         
-        Personal p = (Personal) this.getEntityByRow(id,nombre,apellido,fecha,tipo);
-        txtcodigo.setText(p.getCod_p());
-        txtnombre.setText(p.getNombre());
-        txtapellido.setText(p.getApellido());
-        txtfecha.setText(p.getFecha_i());
-        if(p.getTipo().equals("Fijo")){
+        this.tmp = (Personal) this.getEntityByRow(id,codigo,nombre,apellido,fecha,tipo,galpon);
+        txtcodigo.setText(tmp.getCod_p());
+        txtnombre.setText(tmp.getNombre());
+        txtapellido.setText(tmp.getApellido());
+        txtfecha.setText(tmp.getFecha_i());
+        if(tmp.getTipo().equals("Fijo")){
             radiofijo.setSelected(true);
         }else{
             radiovolante.setSelected(true);
         }
+        txtgalpon.setText(tmp.getGalpon());
         this.PULSARON_BTN_MODIFICAR = true;
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -427,6 +456,7 @@ public class AgregarPersonal extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public static javax.swing.JPanel jPanel3;
@@ -437,6 +467,7 @@ public class AgregarPersonal extends javax.swing.JInternalFrame {
     public static javax.swing.JTextField txtapellido;
     public static javax.swing.JTextField txtcodigo;
     private javax.swing.JTextField txtfecha;
+    private javax.swing.JTextField txtgalpon;
     public static javax.swing.JTextField txtnombre;
     // End of variables declaration//GEN-END:variables
 }

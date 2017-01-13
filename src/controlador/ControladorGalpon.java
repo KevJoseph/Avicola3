@@ -5,27 +5,37 @@
  */
 package controlador;
 
-import modelo.ModeloPersonal;
+import entidades.BaseDatosResultados;
+import entidades.Galpon;
+import java.util.ArrayList;
+import modelo.ModeloGalpon;
+
 
 /**
  *
  * @author vek
  */
 public class ControladorGalpon {
-    ControladorBaseDatos bd;
-    ModeloPersonal mp;
+    ModeloGalpon mgalpon;
 
     public ControladorGalpon() {
-        this.bd = new ControladorBaseDatos();
-        this.mp = new ModeloPersonal();
+        this.mgalpon = new ModeloGalpon();
     }
     
-    public int guardar(){
-        return 1;
+    public int guardar(Galpon g){
+        if(BaseDatosResultados.EXITO_GUARDAR == mgalpon.insert(g.getNumero(),g.getDescripcion())){
+            System.out.println("ControllerGalpon Guardar.. OK");
+            return  BaseDatosResultados.EXITO_GUARDAR;
+        }else{
+            System.out.println("ControllerGalpon Guardar.. ERROR");
+            return BaseDatosResultados.FALLO_GUARDAR;
+        }
     }
     
-    public int mostrar(){
-        return 1;
+    public ArrayList mostrar(){
+        ArrayList lista = new ArrayList();
+        lista = mgalpon.select();
+        return lista;
     }
     
     public int modificar(){

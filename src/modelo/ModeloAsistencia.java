@@ -32,11 +32,14 @@ public class ModeloAsistencia {
     }
 
 
-    public ArrayList select() {
+    public ArrayList select(String eleccion,String date) {
         ArrayList lista = new ArrayList();
+        String sql="select * from repo order by fecha";
+        if(eleccion.equals("conWhere")){
+            sql="select * from repo where fecha="+"'"+date+"'"+"order by idpersonal";
+        }
         try {
         this.bd.conectar();
-        String sql = "select a.idpersonal,p.codpersonal,p.nombre,p.apellido,a.idgalpon,a.estado,a.hora_extra,a.fecha from asistencias a inner join personal p on (a.idpersonal = p.id)";
         Statement st = this.bd.objconexion().createStatement();
         ResultSet rs = st.executeQuery(sql);
               
@@ -50,6 +53,7 @@ public class ModeloAsistencia {
                 String hora_extra = rs.getString("hora_extra");
                 String fecha = rs.getString("fecha");
                 Asistencia tempasis = new Asistencia(idpersonal,codpersonal,nombre,apellido,idgalpon,estado,hora_extra,fecha);
+                //System.out.println(tempasis.toString());
                 lista.add(tempasis);
                 
             }
@@ -63,18 +67,16 @@ public class ModeloAsistencia {
         }
    
     }
-
-    public int update(String idpersonal,String idgalpon,String estado,String hora_extra,String fecha) {
+    public int update(String idpersonal,String estado,String hora_extra,String fecha) {
+        System.out.println("hehe: "+idpersonal+" "+estado+" "+hora_extra+" "+fecha);
         try {
             this.bd.conectar();
-            String sql = "UPDATE asistencias SET idpersonal=?,idgalpon=?,estado=?,hora_extra=?,fecha=? WHERE idpersonal=?";
+            String sql = "UPDATE repo SET estado=?,hora_extra=? WHERE idpersonal=? and fecha=?";
             PreparedStatement st = this.bd.objconexion().prepareStatement(sql);
-            st.setString(1,idpersonal);
-            st.setString(2, idgalpon);
-            st.setString(3, estado);
-            st.setString(4, hora_extra);
-            st.setString(5, fecha);
-            st.setString(6, idgalpon);
+            st.setString(1, estado);
+            st.setString(2, hora_extra);
+            st.setString(3, idpersonal);
+            st.setString(4, fecha);
             st.execute();
             this.bd.desconectar();
             System.out.println("ModelAsistencias... UPDATE OK");
@@ -102,4 +104,19 @@ public class ModeloAsistencia {
             return 0;
         }
     }
+    public int proc_fantasma(){
+        try {
+            this.bd.conectar();
+            String sql = "call proc_fantasma()";
+            CallableStatement cs = this.bd.objconexion().prepareCall(sql);
+            cs.execute();
+            System.out.println("Procedure Store proc_fantasma() Model... OK");
+            this.bd.desconectar();
+            return 1;
+        } catch (Exception e) {
+            System.out.println("Procedure Store proc_fantasma() Model... ERROR");
+            return 0;
+        }
+    }
+
 }

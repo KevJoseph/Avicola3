@@ -5,28 +5,31 @@
  */
 package entidades;
 
+import java.util.Vector;
+
 /**
  *
  * @author vek
  */
 public class Galpon {
     private String id;
-    private String numero_g;
-    private String codpersonal;
-    private String nombre_p;
-    private String apellido_p;
+    private String numero;
+    private String descripcion;
 
     public Galpon() {
     }
 
-    public Galpon(String id, String numero_g, String codpersonal, String nombre_p, String apellido_p) {
+    public Galpon(String id, String numero, String descripcion) {
         this.id = id;
-        this.numero_g = numero_g;
-        this.codpersonal = codpersonal;
-        this.nombre_p = nombre_p;
-        this.apellido_p = apellido_p;
+        this.numero = numero;
+        this.descripcion = descripcion;
     }
 
+    public Galpon(String numero, String descripcion) {
+        this.numero = numero;
+        this.descripcion = descripcion;
+    }
+    
     public String getId() {
         return id;
     }
@@ -35,44 +38,30 @@ public class Galpon {
         this.id = id;
     }
 
-    public String getNumero_g() {
-        return numero_g;
+    public String getNumero() {
+        return numero;
     }
 
-    public void setNumero_g(String numero_g) {
-        this.numero_g = numero_g;
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
-    public String getCodpersonal() {
-        return codpersonal;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setCodpersonal(String codpersonal) {
-        this.codpersonal = codpersonal;
-    }
-
-    public String getNombre_p() {
-        return nombre_p;
-    }
-
-    public void setNombre_p(String nombre_p) {
-        this.nombre_p = nombre_p;
-    }
-
-    public String getApellido_p() {
-        return apellido_p;
-    }
-
-    public void setApellido_p(String apellido_p) {
-        this.apellido_p = apellido_p;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override
     public String toString() {
-        return "Galpon{" + "id=" + id + ", numero_g=" + numero_g + ", codpersonal=" + codpersonal + ", nombre_p=" + nombre_p + ", apellido_p=" + apellido_p + '}';
+        return "Galpon{" + "id=" + id + ", numero=" + numero + ", descripcion=" + descripcion + '}';
+    }
+
+    public Object[] toArray() {
+        return new Object[]{this.id,this.numero, this.descripcion};
     }
    
-    
-    
     
 }

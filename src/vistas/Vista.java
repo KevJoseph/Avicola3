@@ -34,6 +34,8 @@ public class Vista extends javax.swing.JFrame {
         menuGalpon = new javax.swing.JMenuItem();
         menuAsistencia = new javax.swing.JMenu();
         menuItemAsistencia = new javax.swing.JMenuItem();
+        menuPlanilla = new javax.swing.JMenu();
+        menuItemGenerar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -88,6 +90,18 @@ public class Vista extends javax.swing.JFrame {
 
         jMenuBar1.add(menuAsistencia);
 
+        menuPlanilla.setText("Planilla");
+
+        menuItemGenerar.setText("Generar");
+        menuItemGenerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemGenerarActionPerformed(evt);
+            }
+        });
+        menuPlanilla.add(menuItemGenerar);
+
+        jMenuBar1.add(menuPlanilla);
+
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -103,7 +117,9 @@ public class Vista extends javax.swing.JFrame {
 
     private void menuGalponActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGalponActionPerformed
         // TODO add your handling code here:
-        System.out.println("asdasdqeqe");
+        FormGalpon frmgalpon = new FormGalpon();
+        escritorio.add(frmgalpon);
+        frmgalpon.show();
     }//GEN-LAST:event_menuGalponActionPerformed
 
     private void menuAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAsistenciaActionPerformed
@@ -112,10 +128,18 @@ public class Vista extends javax.swing.JFrame {
 
     private void menuItemAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAsistenciaActionPerformed
         // TODO add your handling code here:
-        FormAsistencias frmAsistencia = new FormAsistencias();
+        FrmAsistencia frmAsistencia = new FrmAsistencia();
         escritorio.add(frmAsistencia);
         frmAsistencia.show();
     }//GEN-LAST:event_menuItemAsistenciaActionPerformed
+
+    private void menuItemGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemGenerarActionPerformed
+        // TODO add your handling code here:
+        FormPlanilla1 frmPlanilla = new FormPlanilla1();
+        escritorio.add(frmPlanilla);
+        frmPlanilla.show();
+        
+    }//GEN-LAST:event_menuItemGenerarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,7 +151,9 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JMenu menuAsistencia;
     private javax.swing.JMenuItem menuGalpon;
     private javax.swing.JMenuItem menuItemAsistencia;
+    private javax.swing.JMenuItem menuItemGenerar;
     private javax.swing.JMenu menuMantenimiento;
     public static javax.swing.JMenuItem menuPersonal;
+    private javax.swing.JMenu menuPlanilla;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,6 +7,10 @@ package vistas;
 
 import controlador.ControladorGalpon;
 import entidades.Galpon;
+import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.table.DefaultTableModel;
+import static vistas.AgregarPersonal.tabla;
 
 /**
  *
@@ -15,20 +19,43 @@ import entidades.Galpon;
 public class FormGalpon extends javax.swing.JInternalFrame {
     private ControladorGalpon cgalpon = new ControladorGalpon();
     private Galpon galpon;
+    DefaultTableModel modelo = new DefaultTableModel();
     /**
      * Creates new form FormGalpon
      */
     public FormGalpon() {
         initComponents();
+        configTable();
+        mostrarTable();
     }
     
-    public Galpon obtenerInputs(Galpon galpon){
-       galpon.setNumero_g(txtnumero.getText());
-       galpon.setNombre_p(txtnombre.getText());
-       galpon.setApellido_p(txtapellido.getText());
-       return galpon;
+    public void configTable(){
+        modelo.addColumn("Id");
+        modelo.addColumn("Numero");
+        modelo.addColumn("Descripcion");
+        this.tabla.setModel(modelo);
     }
-
+    
+    public void mostrarTable(){
+        ArrayList info = new ArrayList();
+        info = cgalpon.mostrar();
+        Iterator it = info.iterator();
+        while(it.hasNext()){
+            Galpon g = (Galpon) it.next();
+            this.modelo.addRow(g.toArray());
+        }
+        this.tabla.setModel(modelo);
+    }
+    private void clearTable(){
+       for (int i = 0; i < tabla.getRowCount(); i++) {
+           this.modelo.removeRow(i);
+           i-=1;
+       }
+    }
+    public void clearCajas(){
+        txtnumero.setText("");
+        txtdescripcion.setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,36 +69,26 @@ public class FormGalpon extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtnumero = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        txtcodigo = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txtnombre = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        txtapellido = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        txtdescripcion = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         btnguardar = new javax.swing.JButton();
         btnmodificar = new javax.swing.JButton();
         btneliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla = new javax.swing.JTable();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nuevo Galpon", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 10))); // NOI18N
 
         jLabel1.setText("Numero:");
 
-        jLabel2.setText("Codigo:");
-
-        jLabel3.setText("Nombre:");
-
-        jLabel4.setText("Apellido:");
-
-        txtapellido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtapellidoActionPerformed(evt);
-            }
-        });
+        jLabel5.setText("Descripcion:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -85,17 +102,9 @@ public class FormGalpon extends javax.swing.JInternalFrame {
                         .addGap(29, 29, 29)
                         .addComponent(txtnumero, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(33, 33, 33)
-                        .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(29, 29, 29)
-                        .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(29, 29, 29)
-                        .addComponent(txtapellido, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel5)
+                        .addGap(10, 10, 10)
+                        .addComponent(txtdescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -104,18 +113,13 @@ public class FormGalpon extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(txtnumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(txtapellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel5))
+                    .addComponent(txtdescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Mantenimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 10))); // NOI18N
@@ -140,7 +144,7 @@ public class FormGalpon extends javax.swing.JInternalFrame {
                 .addComponent(btnguardar)
                 .addGap(41, 41, 41)
                 .addComponent(btnmodificar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addComponent(btneliminar)
                 .addGap(24, 24, 24))
         );
@@ -155,18 +159,15 @@ public class FormGalpon extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabla);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -185,11 +186,11 @@ public class FormGalpon extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1);
@@ -197,13 +198,15 @@ public class FormGalpon extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtapellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtapellidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtapellidoActionPerformed
-
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
         // TODO add your handling code here:
-        
+        Galpon g = new Galpon();
+        g.setNumero(txtnumero.getText());
+        g.setDescripcion(txtdescripcion.getText());
+        cgalpon.guardar(g);
+        clearCajas();
+        clearTable();
+        mostrarTable();
     }//GEN-LAST:event_btnguardarActionPerformed
 
 
@@ -212,17 +215,13 @@ public class FormGalpon extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnguardar;
     private javax.swing.JButton btnmodificar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txtapellido;
-    private javax.swing.JTextField txtcodigo;
-    private javax.swing.JTextField txtnombre;
+    private javax.swing.JTable tabla;
+    private javax.swing.JTextField txtdescripcion;
     private javax.swing.JTextField txtnumero;
     // End of variables declaration//GEN-END:variables
 }

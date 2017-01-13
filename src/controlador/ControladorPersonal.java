@@ -24,7 +24,7 @@ public class ControladorPersonal {
 
     public int guardarPersonal(Personal personal){
         
-       int resultado = this.mpersonal.insertPersonal(personal.getCod_p(),personal.getNombre(),personal.getApellido(),personal.getFecha_i(),personal.getTipo());
+       int resultado = this.mpersonal.insertPersonal(personal.getCod_p(),personal.getNombre(),personal.getApellido(),personal.getFecha_i(),personal.getTipo(),personal.getGalpon());
 
         if(resultado == BaseDatosResultados.EXITO_GUARDAR){
             return BaseDatosResultados.EXITO_GUARDAR;
@@ -45,7 +45,7 @@ public class ControladorPersonal {
     }
     public int modificarPersonal(Personal personal){
    
-        int resultado = this.mpersonal.updatePersonal(personal.getCod_p(),personal.getNombre(),personal.getApellido(),personal.getFecha_i(),personal.getTipo());
+        int resultado = this.mpersonal.updatePersonal(personal.getId(),personal.getCod_p(),personal.getNombre(),personal.getApellido(),personal.getFecha_i(),personal.getTipo(),personal.getGalpon());
         
         if(resultado == BaseDatosResultados.EXITO_GUARDAR){
             return BaseDatosResultados.EXITO_GUARDAR;
